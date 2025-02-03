@@ -31,7 +31,7 @@
 
 ```bash
 cd /opt
-git clone https://github.com/Ttolyanich/quota-management.git
+git clone https://github.com/Ttolyanich/quota-managment.git
 cd quota-management
 ```
 
