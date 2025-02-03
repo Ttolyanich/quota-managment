@@ -32,7 +32,7 @@
 ```bash
 cd /opt
 git clone https://github.com/Ttolyanich/quota-managment.git
-cd quota-management
+cd /opt/quota-managment/
 ```
 
 ### Шаг 2: Установка пакетов и настройка
