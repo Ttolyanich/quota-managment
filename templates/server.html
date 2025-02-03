@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Детали сервера</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <a href="/" class="btn">Назад</a>
+    <h1>Сервер: {{ server.name }}</h1>
+    <p>Общий объем: {{ server.total_storage }} ГБ</p>
+    <p>Использовано: {{ used_storage }} ГБ</p>
+    <p>Свободно: {{ free_storage }} ГБ</p>
+    <h2>Квоты компаний</h2>
+    <table class="server-table">
+        <tr>
+            <th>Компания</th>
+            <th>Выделено (ГБ)</th>
+        </tr>
+        {% for company in server.companies %}
+        <tr>
+            <td>{{ company.name }}</td>
+            <td>{{ company.allocated_quota }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+</body>
+</html>

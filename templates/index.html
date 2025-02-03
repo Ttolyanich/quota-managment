@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список серверов</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Серверы для бэкапа</h1>
+    <table class="server-table">
+        <tr>
+            <th>Имя сервера</th>
+            <th>Общий объем (ГБ)</th>
+            <th>Использовано (ГБ)</th>
+            <th>Свободно (ГБ)</th>
+            <th>Действия</th>
+        </tr>
+        {% for server in servers %}
+        <tr>
+            <td>{{ server.name }}</td>
+            <td>{{ server.total_storage }}</td>
+            <td>{{ server.used_storage }}</td>
+            <td>{{ server.free_storage }}</td>
+            <td><a class="btn" href="/server/{{ server.id }}">Просмотр</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <a href="/admin" class="btn">Перейти в админ-панель</a>
+</body>
+</html>

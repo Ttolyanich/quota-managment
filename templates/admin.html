@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Администрирование серверов</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Администрирование серверов</h1>
+    <h2>Список серверов</h2>
+    <table class="server-table">
+        <tr>
+            <th>Имя сервера</th>
+            <th>Общий объем (ГБ)</th>
+            <th>Действия</th>
+        </tr>
+        {% for server in servers %}
+        <tr>
+            <td>{{ server.name }}</td>
+            <td>{{ server.total_storage }}</td>
+            <td>
+                <a class="btn" href="{{ url_for('edit_resources', server_id=server.id) }}">Редактировать</a>
+                <form action="{{ url_for('delete_server', server_id=server.id) }}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Удалить сервер?');">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h2>Добавить новый сервер</h2>
+    <form action="{{ url_for('add_server') }}" method="post">
+        <input type="text" name="name" placeholder="Имя сервера" required>
+        <input type="number" name="total_storage" placeholder="Общий объем (ГБ)" required>
+        <button type="submit" class="btn">Добавить</button>
+    </form>
+    <br>
+    <a href="{{ url_for('index') }}" class="btn">Назад</a>
+</body>
+</html>

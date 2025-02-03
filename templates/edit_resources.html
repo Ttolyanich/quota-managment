@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование ресурсов сервера</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <a href="{{ url_for('admin') }}" class="btn">Назад в админку</a>
+    <h1>Редактирование ресурсов сервера: {{ server.name }}</h1>
+    
+    <!-- Форма редактирования ресурсов сервера -->
+    <form action="{{ url_for('edit_resources', server_id=server.id) }}" method="post">
+        <label>Общий объем (ГБ):</label>
+        <input type="number" name="total_storage" value="{{ server.total_storage }}" required>
+        <button type="submit" class="btn">Сохранить</button>
+    </form>
+    
+    <h2>Управление квотами компаний</h2>
+    <table class="server-table">
+        <tr>
+            <th>Компания</th>
+            <th>Выделено (ГБ)</th>
+            <th>Действия</th>
+        </tr>
+        {% for company in server.companies %}
+        <tr>
+            <td>{{ company.name }}</td>
+            <td>{{ company.allocated_quota }}</td>
+            <td>
+                <!-- Форма редактирования квоты компании -->
+                <form action="{{ url_for('edit_company', server_id=server.id, company_name=company.name) }}" method="post" style="display:inline;">
+                    <input type="number" name="allocated_quota" value="{{ company.allocated_quota }}" required>
+                    <button type="submit" class="btn">Изменить</button>
+                </form>
+                <!-- Форма для удаления квоты компании -->
+                <form action="{{ url_for('delete_company', server_id=server.id, company_name=company.name) }}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Удалить квоту компании?');">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <h2>Добавить квоту компании</h2>
+    <form action="{{ url_for('add_company', server_id=server.id) }}" method="post">
+        <input type="text" name="name" placeholder="Название компании" required>
+        <input type="number" name="allocated_quota" placeholder="Выделенная квота (ГБ)" required>
+        <button type="submit" class="btn">Добавить</button>
+    </form>
+    
+    <br>
+</body>
+</html>
